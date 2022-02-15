@@ -22,14 +22,10 @@ class SLList {
 
             return this;
         }
-
         // if there is a head
         newNode.next = this.head;
         this.head = newNode;
-
         return this;
-
-
     }
 
     addToBack(value) {
@@ -40,54 +36,49 @@ class SLList {
             var temp = this.head
             while (temp.next != null) {
                 temp = temp.next
-                console.log(temp.value)
             }
             temp.next = node
-
         }
-
         return this
-
-
-
     }
 
     removeFromFront() {
-
         if (this.head == null) {
-            console.log("Nothing heree")
         } else {
             this.head = this.head.next
 
             return this
         }
         return;
-
-
     }
 
     removeFromBack() {
-
         if (this.head !== null) {
-
             var temp = this.head
             while (temp.next.next != null) {
                 // console.log("next ", temp.next)
-
                 temp = temp.next
-
-
-
             }
-            console.log(temp)
             temp.next = null
-
-
-
         }
-
         return this
+    }
 
+    contains(value){
+        if(this.head == null){
+            return false;
+        }
+        let runner = this.head
+        while(runner.next != null){
+            if(runner.value == value){
+                return true;
+            }
+            runner = runner.next;
+        }
+        if(runner.value == value){
+            return true;
+        }
+        return false;
     }
 
     // print the singly linked list
@@ -120,9 +111,11 @@ sll.addToBack(5)
 sll.addToFront(-2)
 
 
-sll.printValues()
-sll.removeFromBack()
-sll.printValues()
-sll.removeFromFront()
+// sll.printValues()
+// sll.removeFromBack()
+// sll.printValues()
+// sll.removeFromFront()
 
-sll.printValues()
+console.log(sll.contains(5));
+
+// sll.printValues()
