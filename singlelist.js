@@ -81,6 +81,90 @@ class SLList {
         return false;
     }
 
+    minToFront(){
+        if(this.head == null){
+            return;
+        }
+        
+        let currentMinPrev = this.head;
+        let currentPrev = this.head;
+        let currentMin = this.head;
+        let runner = this.head;
+        while(runner.next != null){
+            if(runner.value < currentMin.value){
+                currentMin = runner;
+                currentMinPrev = currentPrev;
+            }
+
+            if(runner != this.head){
+                currentPrev = currentPrev.next;
+            }
+            runner = runner.next;
+        }
+
+        //Testing the last node in the list
+        if(runner.value < currentMin.value){
+            currentMin = runner;
+            currentMinPrev = currentPrev;
+        }
+    
+        //min value was already the head
+        if(currentMin == this.head){
+            console.log(currentMin.value);
+            return;
+        } 
+        //min value was not already at the head:
+
+        //Set the node prior to the minmum node to minimumNode.next
+        currentMinPrev.next = currentMin.next;
+        
+        //minimumNode.next = this.head
+        currentMin.next = this.head;
+        //this.head = minimumNode
+        this.head = currentMin;
+    }
+
+    maxToBack(self){
+        if(this.head == null){
+            return;
+        }
+        
+        let currentMaxPrev = this.head;
+        let currentPrev = this.head;
+        let currentMax = this.head;
+        let runner = this.head;
+        while(runner.next != null){
+            if(runner.value > currentMax.value){
+                currentMax = runner;
+                currentMaxPrev = currentPrev;
+            }
+
+            if(runner != this.head){
+                currentPrev = currentPrev.next;
+            }
+            runner = runner.next;
+        }
+
+        //Testing the last node in the list
+        if(runner.value > currentMax.value){
+            console.log(runner.value + " > " + currentMax.value);
+            currentMax = runner;
+            currentMaxPrev = currentPrev;
+        }
+    
+        //Max was the head...?
+        if(currentMax == this.head){
+            this.addToBack(this.head.value);
+            this.head = this.head.next;
+            return;
+        } 
+
+        //Set the node prior to the max node to maxNode.next
+        currentMaxPrev.next = currentMax.next;
+        this.addToBack(currentMax.value);
+    
+    }
+
     // print the singly linked list
     printValues() {
         // step #0 [EDGE CASE]) handle a case where there is nothing in the list
@@ -93,6 +177,8 @@ class SLList {
         var runner = this.head;
 
         // NOTE: we can move runner all the way into null because our loop will exit as soon as runner hits null, avoiding any errors with printing
+
+
         while (runner != null) {
             // step #2) print the values at each iteration before moving the runner!
             console.log(`The current value is: ${runner.value}`)
@@ -105,17 +191,19 @@ class SLList {
 }
 
 const sll = new SLList();
-sll.addToFront(-3)
+sll.addToFront(1)    
+sll.addToFront(5)
+sll.addToFront(6);
+sll.addToBack(9);
 
-sll.addToBack(5)
-sll.addToFront(-2)
-
+// sll.minToFront();
+sll.maxToBack();
 
 // sll.printValues()
 // sll.removeFromBack()
 // sll.printValues()
 // sll.removeFromFront()
 
-console.log(sll.contains(5));
+// console.log(sll.contains(5));
 
-// sll.printValues()
+sll.printValues()
