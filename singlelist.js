@@ -162,7 +162,48 @@ class SLList {
         //Set the node prior to the max node to maxNode.next
         currentMaxPrev.next = currentMax.next;
         this.addToBack(currentMax.value);
-    
+    }
+
+    appendValue(val, i){
+        let newNode = new Node(val)
+
+
+        let count = 0;
+        let runner = this.head
+        while(runner != null){
+            if(count == i){
+                newNode.next = runner.next
+                runner.next = newNode
+                return this;
+            }
+            count++;
+            runner = runner.next;
+        }
+        return false;
+    }
+
+    prependValue(val, i){
+        let newNode =  new Node(val)
+
+        if(this.head == null){
+            return;
+        }
+        if(i == 0){
+            this.addToFront(val);
+        }
+
+        let count = 0;
+        let runner = this.head;
+        while(runner != null){
+            if(count == i-1){
+                newNode.next = runner.next;
+                runner.next = newNode
+                return this;
+            }
+            count++;
+            runner = runner.next
+        }
+        return false;
     }
 
     // print the singly linked list
@@ -194,10 +235,12 @@ const sll = new SLList();
 sll.addToFront(1)    
 sll.addToFront(5)
 sll.addToFront(6);
-sll.addToBack(9);
+sll.addToBack(9);    
 
 // sll.minToFront();
 sll.maxToBack();
+sll.appendValue(20, 4);
+sll.prependValue(30, 0)
 
 // sll.printValues()
 // sll.removeFromBack()
