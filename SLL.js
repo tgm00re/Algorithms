@@ -60,6 +60,21 @@ class singlyLinkedList{
         this.head = this.head.next;
     }
 
+    removeFromBack(){
+        if(this.head == null){
+            return;
+        }
+        if(this.head.next == null){
+            this.head = null;
+            return;
+        }
+        let runner = this.head;
+        while(runner.next.next != null){
+            runner = runner.next;
+        }
+        runner.next = null;
+    }
+
     toString(){
         if(this.head === null) return;
         console.log("Running toString: ");
@@ -111,18 +126,79 @@ class singlyLinkedList{
         return sum / elements;
     }
 
+    contains(val){
+        if(this.head == null){
+            return false;
+        }
+        let runner = this.head;
+        while(runner != null){
+            if(runner.data == val){
+                return true;
+            }
+            runner = runner.next;
+        }
+        return false;
+    }
 
+    containsRecursive(val, current=this.head){
+        if(current == null){
+            return false;
+        }
+        if(current.data == val){
+            return true;
+        }
+        return this.containsRecursive(val, current.next);
+    }
 
+    recursiveMax(runner = this.head, maxNode = this.head){
+        if(this.head == null){
+            return null;
+        }
+        if(runner == null){
+            return maxNode.data;
+        }
+        if(runner.data > maxNode.data){
+            maxNode = runner;
+        }
+        return this.recursiveMax(runner.next, maxNode);
+
+    }
+
+    recrusiveReverse(currentNode=null, runner=this.head, newHeadReference=this.head){
+        if(this.head == null){
+            return;
+        }
+        if(currentNode == this.head){
+            this.head.next = null;
+            this.head = newHeadReference;
+            return;
+        } else if(currentNode == null){
+            //Set currentNode to the tail
+            let tailFinder = this.head;
+            while(tailFinder.next != null){
+                tailFinder = tailFinder.next;
+            }
+            //Now we call the function with the currentNode being tail.
+            newHeadReference = tailFinder;
+            this.recrusiveReverse(tailFinder,this.head, newHeadReference);
+        } else if(runner.next == currentNode){
+            currentNode.next = runner;
+            currentNode = runner;
+            this.recrusiveReverse(currentNode,this.head,newHeadReference);
+        } else{
+            this.recrusiveReverse(currentNode, runner.next,newHeadReference);
+        }
+    }
 }
 
 let mySll = new singlyLinkedList();
 mySll.addToFront(32);
 mySll.addToFront(64);
-mySll.addToFront(128);
-mySll.addToFront(256);
-mySll.addToBack(512);
-mySll.insertAtFront(100);
-console.log(mySll.average());
+mySll.addToFront(10000);
+mySll.addToFront(12);
+mySll.toString();
+
+mySll.recrusiveReverse();
 mySll.toString();
 // mySll.addToBackN([111,222,333,444,555]);
 // mySll.removeFromFront();
