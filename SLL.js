@@ -76,7 +76,10 @@ class singlyLinkedList{
     }
 
     toString(){
-        if(this.head === null) return;
+        if(this.head === null){
+            console.log("LIST WAS EMPTY :(");
+            return;
+        }
         console.log("Running toString: ");
         let myStr = "";
         let runner = this.head;
@@ -93,7 +96,6 @@ class singlyLinkedList{
         }
         return false;
     }
-
 
     removeHead(){
         if(this.head == null){
@@ -189,6 +191,72 @@ class singlyLinkedList{
             this.recrusiveReverse(currentNode, runner.next,newHeadReference);
         }
     }
+
+    secondToLast(){
+        if(this.head == null){
+            return null;
+        }
+        if(this.head.next == null){
+            return this.head.data;
+        }
+        let runner = this.head;
+        while(runner.next.next != null){
+            runner = runner.next;
+        }
+        return runner.data;
+    }
+
+    removeVal(val){
+        if(this.head == null){
+            console.log("You can't remove a value from an empty list!")
+            return; 
+        }
+        if(this.head.data == val){
+            this.removeFromFront();
+            return;
+        }
+        let runner = this.head;
+        while(runner.next != null && runner.next.data != val){
+            runner = runner.next;
+        }
+        if(runner.next == null){
+            console.log("The value was not in the list!");
+            return;
+        }
+        runner.next = runner.next.next;
+    }
+
+    prepend(targetVal, newVal){
+        if(this.head == null){
+            console.log("Can't prepend to a value that doesn't exist!");
+            return;
+        }
+        if(this.head.data == targetVal){
+            this.addToFront(newVal);
+            return;
+        }
+
+        let runner = this.head;
+        while(runner.next != null && runner.next.data != targetVal){
+            runner = runner.next;
+        }
+
+        if(runner.next == null){
+            console.log("Value was not found in the list.");
+            return;
+        }
+
+        let newNode = new Node(newVal);
+        newNode.next = runner.next;
+        runner.next = newNode;
+
+    }
+
+    
+
+
+
+
 }
 
 let mySll = new singlyLinkedList();
@@ -197,8 +265,9 @@ mySll.addToFront(64);
 mySll.addToFront(10000);
 mySll.addToFront(12);
 mySll.toString();
-
-mySll.recrusiveReverse();
+mySll.prepend(32, 72)
 mySll.toString();
+
+// mySll.recrusiveReverse();
 // mySll.addToBackN([111,222,333,444,555]);
 // mySll.removeFromFront();
