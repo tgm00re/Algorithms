@@ -252,20 +252,75 @@ class singlyLinkedList{
 
     }
 
-    
+    concat(addList){
+        if(this.head == null){
+            this.head = addList.head;   //List 1: null
+           return;                     // List 2: 1,2,3            1,23
+        }
 
+        let runner = this.head;
+        while(runner.next != null){
+            runner = runner.next;
+        }
+        runner.next = addList.head;
+    }
 
+    moveMinToFront(){
+        if(this.head == null || this.head.next == null){
+            return;
+        }
+        let currentMin = this.head.data;
+        let runner = this.head.next;
+        while(runner != null){
+            if(runner.data < currentMin){
+                currentMin = runner.data;
+            }
+            runner = runner.next;
+        }
+        this.removeVal(currentMin);
+        this.addToFront(currentMin);
+    }
+
+    splitOnValue(val){
+        let newList = new singlyLinkedList();
+        if(this.head == null){
+            return newList;
+        }
+        if(this.head.next == null){
+            if(this.head.data == val){
+                newList.head = this.head;
+                this.head = null;
+            }
+            return newList;
+        }
+        let runner = this.head;
+        while(runner.next != null){
+            if(runner.next.data == val){
+                newList.head = runner.next;
+                runner.next = null;
+                return newList;
+            }
+            runner = runner.next;
+        }
+        //If we reach this point, we know that the value wasn't in the list 
+        console.log("The given value was not in the list.");
+        return newList;
+    }
 
 
 }
 
 let mySll = new singlyLinkedList();
-mySll.addToFront(32);
 mySll.addToFront(64);
+mySll.addToFront(32);
 mySll.addToFront(10000);
-mySll.addToFront(12);
+mySll.addToFront(78);
 mySll.toString();
-mySll.prepend(32, 72)
+// const newList = new singlyLinkedList();
+// newList.addToFront(100)
+// newList.addToFront(200)
+// newList.addToFront(300)
+mySll.concat(newList);
 mySll.toString();
 
 // mySll.recrusiveReverse();
