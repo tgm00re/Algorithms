@@ -69,6 +69,55 @@ class BinarySearchTree{
         return node == null ? null : node.left == null ? node.data : this.minRecursive(node.left);
     }
 
+    contains(searchVal){
+        if(this.root == null){
+            return false;
+        }
+        let runner = this.root;
+        while(runner != null){
+            if(searchVal == runner.data){
+                return true;
+            }
+            if(searchVal > runner.data){
+                runner = runner.right;
+            } else {
+                runner = runner.left;
+            }
+        }
+        return false;
+    }
+
+    containsRecursive(searchVal, startNode = this.root){
+        if(startNode == null){
+            return false;
+        }
+        if(searchVal == startNode.data){
+            return true;
+        }
+        if(searchVal > startNode.data){
+            return this.containsRecursive(searchVal, startNode.right)
+        }
+        if(searchVal < startNode.data){
+            return this.containsRecursive(searchVal, startNode.left);
+        }
+    }
+
+    range(startNode = this.root){
+        if(startNode == null){
+            return null;
+        }
+        let leftRunner = startNode;
+        let rightRunner = startNode;
+        while(leftRunner.left != null){
+            leftRunner = leftRunner.left
+        }
+        while(rightRunner.right != null){
+            rightRunner = rightRunner.right;
+        }
+
+        return rightRunner.data - leftRunner.data;
+    }
+
     
 
 
@@ -93,10 +142,11 @@ oneNodeTree.addValue(24);
 oneNodeTree.addValue(5);
 oneNodeTree.addValue(13);
 oneNodeTree.addValue(12);
-console.log(oneNodeTree.maxRecursive());
-console.log(oneNodeTree.minRecursive());
-console.log(oneNodeTree.min());
-console.log(oneNodeTree.max());
+console.log(oneNodeTree.range())
+// console.log(oneNodeTree.maxRecursive());
+// console.log(oneNodeTree.minRecursive());
+// console.log(oneNodeTree.min());
+// console.log(oneNodeTree.max());
 
 
 
