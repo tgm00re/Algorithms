@@ -307,21 +307,50 @@ class singlyLinkedList{
         return newList;
     }
 
+    removeNegatives(){
+        if(this.head == null){
+            return;
+        }
+        while(this.head.data < 0 && this.head != null){
+            this.head = this.head.next;
+        }
+        let runner = this.head;
+        while(runner.next != null){
+            if(runner.next.data < 0){
+                runner.next = runner.next.next;
+            } else{
+                runner = runner.next;
+            }
+        }
+    }
+
+    hasLoop(){
+        let checkedNodes = [];
+        let runner = this.head;
+        while(runner != null){
+            if(checkedNodes.includes(runner)){
+                return true;
+            }
+            checkedNodes.push(runner);
+            runner = runner.next;
+        }
+        return false;
+    }
+
 
 }
 
 let mySll = new singlyLinkedList();
 mySll.addToFront(64);
-mySll.addToFront(32);
-mySll.addToFront(10000);
-mySll.addToFront(78);
+mySll.addToFront(-4);
+mySll.addToFront(-50);
+mySll.addToFront(-3);
 mySll.toString();
 // const newList = new singlyLinkedList();
 // newList.addToFront(100)
 // newList.addToFront(200)
 // newList.addToFront(300)
-mySll.concat(newList);
-mySll.toString();
+console.log(mySll.hasLoop());
 
 // mySll.recrusiveReverse();
 // mySll.addToBackN([111,222,333,444,555]);
